@@ -16,7 +16,7 @@ export function BudgetSelector() {
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null)
 
   return (
-    <Card className="border-none bg-transparent h-full">
+    <Card className="border-none bg-transparent h-full shadow-none">
       <CardContent className="p-6 text-center flex flex-col justify-center h-full">
         <div className="mb-6">
           <h2 className="text-[32px] font-bold text-neutral-900 mb-2">
@@ -29,7 +29,7 @@ export function BudgetSelector() {
             <Button
               key={range.value}
               variant={selectedBudget === range.value ? "default" : "outline"}
-              className={`px-3 py-1 text-xs font-medium rounded-full ${selectedBudget === range.value
+              className={`px-3 py-1 text-base font-medium rounded-full ${selectedBudget === range.value
                 ? "bg-neutral-900 text-white"
                 : "bg-white text-neutral-700 border-neutral-700 hover:bg-neutral-50"
                 }`}

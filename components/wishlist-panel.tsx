@@ -43,7 +43,7 @@ export function WishlistPanel() {
               </div>
 
               <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-medium text-neutral-900 truncate">{item.brand}</h3>
+                <h3 className="text-sm font-medium text-neutral-900 truncate">{item.brand || item.title}</h3>
                 <p className="text-xs text-neutral-500 truncate">{item.title}</p>
                 <p className="text-sm font-semibold text-neutral-900">${item.price.toFixed(2)}</p>
               </div>

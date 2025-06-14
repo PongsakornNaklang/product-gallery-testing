@@ -2,13 +2,13 @@
 
 import React, { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Filter, ChevronDown, Loader2, CheckCircle2Icon, Settings2Icon } from "lucide-react"
+import { Loader2, CheckCircle2Icon, Settings2Icon } from "lucide-react"
 import { ProductCard } from "./product-card"
 import { ProductSkeleton } from "./product-skeleton"
 import { BudgetSelector } from "./budget-selector"
-import { CategoryFilter } from "./category-filter"
 import { useProducts } from "../hooks/use-products"
 import type { Product } from "../types/product"
+import { ProTip } from "@/components/pro-tip"
 
 export function ProductGallery() {
   const [selectedCategory, setSelectedCategory] = useState("all")
@@ -105,11 +105,8 @@ export function ProductGallery() {
             <CheckCircle2Icon className="size-5 text-white rounded-full" fill="#22c55e" />
             <span className="text-sm text-neutral-500">Last updated 1hr ago</span>
           </div>
-          <h1 className="text-3xl font-bold text-neutral-900">
-            Product Gallery
-            <br />
-            <span className="text-3xl text-neutral-900">of Latest Items 2025</span>
-          </h1>
+          <h1 className="text-3xl font-bold text-neutral-900">Product Gallery</h1>
+          <h1 className="text-3xl font-bold text-neutral-900">of Latest Items 2025</h1>
         </div>
         <div className="hidden lg:block">
           <Button variant="outline" className="flex items-center gap-2 border-neutral-200 bg-transparent text-neutral-800 font-bold rounded-lg">
@@ -135,18 +132,34 @@ export function ProductGallery() {
         >
           {allProducts.map((product, index) => {
             const isWinner = index === 0 || index === 4
+            const isWalMart = index % 2 === 0
             if (index === 5) {
               return (
                 <React.Fragment key={`budget-${index}`}>
-                  <div className="col-span-1">
+                  <div className="col-span-1 hidden xl:block">
                     <BudgetSelector />
                   </div>
-                  <ProductCard key={product.id} product={product} />
+                  <div className="col-span-1 xl:hidden">
+                    <ProTip />
+                  </div>
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    isWinner={isWinner}
+                    isWalMart={isWalMart}
+                    isAmazon={!isWalMart}
+                  />
                 </React.Fragment>
               )
             }
 
-            return <ProductCard key={product.id} product={product} isWinner={isWinner} />
+            return <ProductCard
+              key={product.id}
+              product={product}
+              isWinner={isWinner}
+              isWalMart={isWalMart}
+              isAmazon={!isWalMart}
+            />
           })}
         </div>
 
@@ -162,7 +175,7 @@ export function ProductGallery() {
         {hasNextPage && !isFetchingNextPage && (
           <div className="text-center">
             <Button variant="outline" className="px-8 py-3 text-lg" onClick={() => fetchNextPage()}>
-              Load More Products
+              Show more
             </Button>
           </div>
         )}
